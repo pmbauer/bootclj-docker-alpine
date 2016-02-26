@@ -1,11 +1,13 @@
-FROM alpine:3.2
+FROM alpine:3.3
 MAINTAINER Paul Bauer <paul@bauer.codes>
 
 ENV JAVA_VERSION=8 \
-    JAVA_UPDATE=60 \
-    JAVA_BUILD=27 \
+    JAVA_UPDATE=72 \
+    JAVA_BUILD=15 \
     JAVA_HOME=/usr/lib/jvm/default-jvm \
     BOOT_AS_ROOT=yes \
+    BOOT_EMIT_TARGET=no \
+    BOOT_VERSION=2.5.5 \
     BOOT_JVM_OPTIONS='-Xmx2g -Djava.security.egd=file:/dev/urandom'
 
 # Here we use several hacks collected from https://github.com/gliderlabs/docker-alpine/issues/11:
@@ -61,10 +63,8 @@ RUN apk add --update wget curl bash ca-certificates && \
            $JAVA_HOME/jre/lib/jfr.jar \
            $JAVA_HOME/jre/lib/jfr \
            $JAVA_HOME/jre/lib/oblique-fonts && \
-    curl -s https://api.github.com/repos/boot-clj/boot/releases \
-        | grep 'download_url.*boot\.sh' | head -1 |sed 's@^.*[:] @wget -O /usr/bin/boot @' \
-        | bash && \
-    chmod +x /usr/bin/boot && \
+    curl -fsSLo /usr/bin/boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh && \
+    chmod 755 /usr/bin/boot && \
     apk del wget curl ca-certificates && \
     /usr/bin/boot web -s doesnt/exist repl -e '(System/exit 0)' && \
     rm -rf /tmp/* /var/cache/apk/* && \
