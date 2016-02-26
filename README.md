@@ -1,16 +1,16 @@
 #### What is this?
 A Docker image packaging [boot-clj](http://boot-clj.com) JDK8, and Clojure 1.7.0
 
-Based on Alpine Linux, it clocks in at smidge over 209 MB.
+Based on Alpine Linux, it clocks in at `207.3 MB`.
 
 #### Example
 
 ```
 # jump quickly to a repl
-docker run --rm -it pmbauer/bootclj:2.2.0 repl
+docker run --rm -it pmbauer/bootclj:2.5.5 repl
 
 # build a jar for boot project in the current folder
-docker run --net=host --rm -it -v $(pwd):/data pmbauer/bootclj:2.2.0 jar
+docker run --net=host --rm -it -v $(pwd):/data pmbauer/bootclj:2.5.5 jar
 ```
 
 #### License
